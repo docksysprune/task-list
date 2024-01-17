@@ -1,13 +1,17 @@
 package org.oceballos;
 import java.util.Scanner;
-public class Reader {
+public class Lector {
     private Scanner scanner;
 
-    public Reader() {
+    public Lector() {
         scanner = new Scanner(System.in);
     }
 
-    public int readOption() {
+    public int leerEntero() {
         return scanner.nextInt();
+    }
+
+    public String leerString() {
+        return scanner.nextLine();
     }
 }

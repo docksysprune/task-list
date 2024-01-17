@@ -2,38 +2,34 @@ package org.oceballos;
 
 public class Main {
     public static void main(String[] args) {
+        ListasTareas listasTareas = new ListasTareas();
         Menu menu = new Menu();
-        Reader reader = new Reader();
-        TaskLists tasks = new TaskLists();
-        int option;
 
-        while (true) {
-            menu.displayMenu();
-            System.out.print("Select an option: ");
-            option = reader.readOption();
-
-            switch (option) {
+        int opcion;
+        do {
+            opcion = menu.mostrarMenuPrincipal();
+            switch (opcion) {
                 case 1:
-                    tasks.createTaskList();
+                    listasTareas.crearListaTareas();
                     break;
                 case 2:
-                    tasks.viewTaskLists();
+                    listasTareas.verListasTareas();
                     break;
                 case 3:
-                    tasks.viewTasksInList();
+                    listasTareas.verTareasDeLista();
                     break;
                 case 4:
-                    tasks.updateTaskList();
+                    listasTareas.actualizarListaTareas();
                     break;
                 case 5:
-                    tasks.deleteTaskList();
+                    listasTareas.eliminarListaTareas();
                     break;
                 case 6:
-                    System.out.println("Exiting the program...");
-                    return;
+                    System.out.println("Saliendo de la aplicación...");
+                    break;
                 default:
-                    System.out.println("Invalid option. Please try again.");
+                    System.out.println("Opción no válida. Intente de nuevo.");
             }
-        }
+        } while (opcion != 6);
     }
 }
