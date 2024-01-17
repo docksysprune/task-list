@@ -28,7 +28,7 @@ public class ListasTareas {
         if (!nombreLista.trim().isEmpty()) {
             ListaTareas nuevaListaTareas = new ListaTareas(nombreLista);
             listasTareas.add(nuevaListaTareas);
-            System.out.println("Nueva lista de tareas creada: " + nombreLista);
+            System.out.printf("Nueva lista de tareas creada: %s%n", nombreLista);
         } else {
             System.out.println("El nombre de la lista de tareas no puede estar vacío. Intente nuevamente.");
         }
@@ -37,7 +37,7 @@ public class ListasTareas {
     public void verListasTareas() {
         System.out.println("Listas de Tareas Disponibles:");
         for (int i = 0; i < listasTareas.size(); i++) {
-            System.out.println((i + 1) + ". " + listasTareas.get(i).getNombre());
+            System.out.printf("%d. %s%n", i + 1, listasTareas.get(i).getNombre());
         }
 
         if (!listasTareas.isEmpty()) {
@@ -115,7 +115,7 @@ public class ListasTareas {
             var nombreLista = listaSeleccionada.getNombre();
             listasTareas.remove(listaSeleccionada);
             listaSeleccionada = null;
-            System.out.println("La lista de tareas " + nombreLista + " fue eliminada.");
+            System.out.printf("La lista de tareas %s fue eliminada.%n", nombreLista);
         } else {
             System.out.println("No se ha seleccionado ninguna lista de tareas. Use 'verListasTareas' para elegir una lista de tareas.");
         }

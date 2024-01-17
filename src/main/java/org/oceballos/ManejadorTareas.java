@@ -46,8 +46,7 @@ public class ManejadorTareas {
         }
     }
 
-    public void marcarTareaComoRealizada(int indiceTarea) {
-        int numeroTarea = indiceTarea - 1;
+    public void marcarTareaComoRealizada(int numeroTarea) {
         if (listaSeleccionada != null && numeroTarea > 0 && numeroTarea <= listaSeleccionada.obtenerTareas().size()) {
             Tarea tareaSeleccionada = listaSeleccionada.obtenerTareas().get(numeroTarea - 1);
 

@@ -1,8 +1,10 @@
 package org.oceballos.model;
 
+import java.io.Serializable;
 import java.util.Date;
 
-public class Tarea {
+public class Tarea implements Serializable {
+    private static final long serialVersionUID = 1L; // Recomendado para la serialización
     private String nombre;
     private final Date fechaCreacion;
     private Date fechaExpiracion;
@@ -50,5 +52,15 @@ public class Tarea {
 
     public void setFechaRealizacion(Date fechaRealizacion) {
         this.fechaRealizacion = fechaRealizacion;
+    }
+
+    @Override
+    public String toString() {
+        return String.format("Tarea: %s, Creada en: %s, Expira en: %s, Estado: %s, Fecha de Realización: %s",
+                nombre,
+                fechaCreacion,
+                fechaExpiracion != null ? fechaExpiracion.toString() : "N/A",
+                realizada ? "Realizada" : "Pendiente",
+                realizada && fechaRealizacion != null ? fechaRealizacion.toString() : "N/A");
     }
 }

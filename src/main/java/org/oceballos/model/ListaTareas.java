@@ -1,10 +1,14 @@
 package org.oceballos.model;
 
+import java.io.Serializable;
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 
-public class ListaTareas {
+public class ListaTareas implements Serializable {
+    private static final long serialVersionUID = 1L; // Agregado para la serialización
+
     private String nombre;
     private final Date fechaCreacion;
     private List<Tarea> tareas;
@@ -77,5 +81,24 @@ public class ListaTareas {
         } else {
             System.out.println("Índice no válido. No se pudo actualizar el nombre de la tarea.");
         }
+    }
+
+    @Override
+    public String toString() {
+        SimpleDateFormat dateFormat = new SimpleDateFormat("dd/MM/yyyy");
+        StringBuilder sb = new StringBuilder();
+        sb.append("Lista de Tareas: '").append(nombre).append("'\n");
+        sb.append("Fecha de Creación: ").append(dateFormat.format(fechaCreacion)).append("\n");
+        sb.append("Tareas:\n");
+
+        if (tareas.isEmpty()) {
+            sb.append("   No hay tareas en esta lista.\n");
+        } else {
+            for (int i = 0; i < tareas.size(); i++) {
+                sb.append("   ").append(i + 1).append(". ").append(tareas.get(i).getNombre()).append("\n");
+            }
+        }
+
+        return sb.toString();
     }
 }
