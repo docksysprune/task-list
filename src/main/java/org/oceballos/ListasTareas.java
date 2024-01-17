@@ -21,17 +21,20 @@ public class ListasTareas {
     }
 
     public void crearListaTareas() {
-        System.out.print("Ingrese el nombre de la nueva lista de tareas: ");
-        String nombreLista = lector.leerString();
+        String nombreLista;
 
-        // Validar que el nombre no esté vacío
-        if (!nombreLista.trim().isEmpty()) {
-            ListaTareas nuevaListaTareas = new ListaTareas(nombreLista);
-            listasTareas.add(nuevaListaTareas);
-            System.out.printf("Nueva lista de tareas creada: %s%n", nombreLista);
-        } else {
-            System.out.println("El nombre de la lista de tareas no puede estar vacío. Intente nuevamente.");
-        }
+        do {
+            System.out.print("Ingrese el nombre de la nueva lista de tareas: ");
+            nombreLista = lector.leerString();
+
+            if (nombreLista.trim().isEmpty()) {
+                System.out.println("\nEl nombre de la lista de tareas no puede estar vacío. Intente nuevamente.");
+            }
+        } while (nombreLista.trim().isEmpty());
+
+        ListaTareas nuevaListaTareas = new ListaTareas(nombreLista);
+        listasTareas.add(nuevaListaTareas);
+        System.out.printf("Nueva lista de tareas creada: %s%n", nombreLista);
     }
 
     public void verListasTareas() {

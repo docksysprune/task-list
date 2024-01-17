@@ -34,12 +34,11 @@ public class ManejadorTareas {
     }
 
     public void eliminarTarea(int numeroTarea) {
-        // Restamos 1 porque los índices en Java comienzan en 0, pero para el usuario comienzan en 1
+        // Validación del índice
         int indiceTarea = numeroTarea - 1;
-
         if (listaSeleccionada != null && indiceTarea >= 0 && indiceTarea < listaSeleccionada.obtenerTareas().size()) {
-            listaSeleccionada.eliminarTarea(indiceTarea); // Utilizamos el método de ListaTareas
-            System.out.println("Tarea eliminada: " + numeroTarea);
+            listaSeleccionada.eliminarTarea(indiceTarea);
+            System.out.printf("Tarea %d eliminada.%n", numeroTarea);
             listarTareas();
         } else {
             System.out.println("Índice no válido. La tarea no se pudo eliminar.");
@@ -47,22 +46,22 @@ public class ManejadorTareas {
     }
 
     public void marcarTareaComoRealizada(int numeroTarea) {
-        if (listaSeleccionada != null && numeroTarea > 0 && numeroTarea <= listaSeleccionada.obtenerTareas().size()) {
-            Tarea tareaSeleccionada = listaSeleccionada.obtenerTareas().get(numeroTarea - 1);
-
-            if (tareaSeleccionada.isRealizada()) {
-                // La tarea ya está marcada como realizada
-                System.out.println("La tarea " + numeroTarea + " ya está marcada como realizada.");
-            } else {
-                // Marcar la tarea como realizada
+        // Validación del índice
+        int indiceTarea = numeroTarea - 1;
+        if (listaSeleccionada != null && indiceTarea >= 0 && indiceTarea < listaSeleccionada.obtenerTareas().size()) {
+            Tarea tareaSeleccionada = listaSeleccionada.obtenerTareas().get(indiceTarea);
+            if (!tareaSeleccionada.isRealizada()) {
                 tareaSeleccionada.marcarComoRealizada();
-                System.out.println("Tarea " + numeroTarea + " marcada como realizada.");
+                System.out.printf("Tarea %d marcada como realizada.%n", numeroTarea);
+            } else {
+                System.out.printf("La tarea %d ya está marcada como realizada.%n", numeroTarea);
             }
+            listarTareas();
         } else {
             System.out.println("Número de tarea inválido o no se ha seleccionado ninguna lista de tareas.");
         }
-        listarTareas();
     }
+
 
     public void setListaSeleccionada(ListaTareas listaSeleccionada) {
         this.listaSeleccionada = listaSeleccionada;
