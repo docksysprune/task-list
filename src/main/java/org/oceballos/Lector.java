@@ -1,4 +1,5 @@
 package org.oceballos;
+import java.util.InputMismatchException;
 import java.util.Scanner;
 public class Lector {
     private Scanner scanner;
@@ -8,7 +9,14 @@ public class Lector {
     }
 
     public int leerEntero() {
-        return scanner.nextInt();
+        while (true) {
+            try {
+                return scanner.nextInt();
+            } catch (InputMismatchException e) {
+                scanner.next(); // Descarta la entrada incorrecta
+                System.out.print("Entrada inválida. Por favor, ingrese un número: ");
+            }
+        }
     }
 
     public String leerString() {

@@ -5,7 +5,6 @@ import org.oceballos.model.Tarea;
 
 import java.util.ArrayList;
 import java.util.List;
-import java.util.Scanner;
 
 public class ListasTareas {
     private List<ListaTareas> listasTareas;
@@ -18,7 +17,7 @@ public class ListasTareas {
         this.listasTareas = new ArrayList<>();
         this.lector = new Lector();
         this.menu = new Menu();
-        this.manejadorTareas = new ManejadorTareas();
+        this.manejadorTareas = new ManejadorTareas(menu); // Pasa la instancia del menú
     }
 
     public void crearListaTareas() {
@@ -56,6 +55,7 @@ public class ListasTareas {
         }
     }
 
+    // En el método verTareasDeLista de la clase ListasTareas
     public void verTareasDeLista() {
         if (listaSeleccionada != null) {
             List<Tarea> tareas = listaSeleccionada.obtenerTareas();
@@ -64,12 +64,16 @@ public class ListasTareas {
                 System.out.println((i + 1) + ". " + tareas.get(i).getNombre());
             }
 
-            // Asegurarse de que 'listaSeleccionada' esté configurada antes de llamar a 'gestionarTareas'
-            gestionarTareas();
+            // Actualizar la lista seleccionada en ManejadorTareas antes de llamar a gestionarTareas
+            manejadorTareas.setListaSeleccionada(this.listaSeleccionada);
+
+            // Llamar al método gestionarTareas de ManejadorTareas
+            manejadorTareas.gestionarTareas();
         } else {
             System.out.println("No se ha seleccionado ninguna lista de tareas. Use 'verListasTareas' para elegir una lista de tareas.");
         }
     }
+
 
     public void actualizarListaTareas() {
         if (listasTareas.isEmpty()) {
@@ -116,41 +120,4 @@ public class ListasTareas {
             System.out.println("No se ha seleccionado ninguna lista de tareas. Use 'verListasTareas' para elegir una lista de tareas.");
         }
     }
-
-    public void gestionarTareas() {
-        if (listaSeleccionada == null) {
-            System.out.println("No se ha seleccionado ninguna lista de tareas. Use 'verListasTareas' para elegir una lista de tareas.");
-            return; // Regresar al menú principal
-        }
-
-        Scanner scanner = new Scanner(System.in);
-        int opcion;
-        do {
-            opcion = menu.mostrarMenuTareas();
-            switch (opcion) {
-                case 1:
-                    System.out.print("Ingrese el nombre de la nueva tarea: ");
-                    String nombreTarea = scanner.nextLine();
-                    Tarea tarea = new Tarea(nombreTarea);
-                    listaSeleccionada.agregarTarea(tarea);
-                    break;
-                case 2:
-                    System.out.print("Ingrese el índice de la tarea que desea eliminar: ");
-                    int indiceEliminar = scanner.nextInt();
-                    listaSeleccionada.eliminarTarea(indiceEliminar);
-                    break;
-                case 3:
-                    System.out.print("Ingrese el índice de la tarea que desea marcar como realizada: ");
-                    int indiceMarcar = scanner.nextInt();
-                    listaSeleccionada.marcarTareaComoRealizada(indiceMarcar);
-                    break;
-                case 4:
-                    System.out.println("Regresando al menú anterior...");
-                    break;
-                default:
-                    System.out.println("Opción no válida. Intente de nuevo.");
-            }
-        } while (opcion != 4);
-    }
-
 }

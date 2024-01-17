@@ -4,10 +4,11 @@ public class Main {
     public static void main(String[] args) {
         ListasTareas listasTareas = new ListasTareas();
         Menu menu = new Menu();
-
         int opcion;
+
         do {
             opcion = menu.mostrarMenuPrincipal();
+
             switch (opcion) {
                 case 1:
                     listasTareas.crearListaTareas();
@@ -16,7 +17,7 @@ public class Main {
                     listasTareas.verListasTareas();
                     break;
                 case 3:
-                    listasTareas.verTareasDeLista();
+                    listasTareas.verTareasDeLista(); // Asegúrate de que la lista seleccionada se configure en este método
                     break;
                 case 4:
                     listasTareas.actualizarListaTareas();
@@ -25,7 +26,7 @@ public class Main {
                     listasTareas.eliminarListaTareas();
                     break;
                 case 6:
-                    System.out.println("Saliendo de la aplicación...");
+                    System.out.println("Saliendo de la aplicación. ¡Hasta luego!");
                     break;
                 default:
                     System.out.println("Opción no válida. Intente de nuevo.");
@@ -33,3 +34,4 @@ public class Main {
         } while (opcion != 6);
     }
 }
+

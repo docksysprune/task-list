@@ -5,44 +5,64 @@ import org.oceballos.model.Tarea;
 
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
-import java.util.Date;
 import java.util.List;
+import java.util.Scanner;
 
 public class ManejadorTareas {
     private ListaTareas listaSeleccionada;
     private List<Tarea> tareas;
+    private Menu menu;
 
-    public ManejadorTareas() {
+    public ManejadorTareas(Menu menu) { // Constructor que recibe una instancia de Menu
         this.tareas = new ArrayList<>();
+        this.menu = menu; // Usamos la instancia pasada
     }
 
     public void agregarNuevaTarea(String nombre) {
         if (listaSeleccionada != null) {
-            Tarea nuevaTarea = new Tarea(nombre);
-            listaSeleccionada.agregarTarea(nuevaTarea); // Utilizamos el método de ListaTareas
-            System.out.println("Nueva tarea agregada: " + nombre);
-            listarTareas();
+            if (nombre != null && !nombre.trim().isEmpty()) { // Validación para el nombre no vacío
+                Tarea nuevaTarea = new Tarea(nombre);
+                listaSeleccionada.agregarTarea(nuevaTarea); // Utilizamos el método de ListaTareas
+                System.out.println("Nueva tarea agregada: " + nombre);
+                listarTareas();
+            } else {
+                System.out.println("El nombre de la tarea no puede estar vacío.");
+            }
         } else {
             System.out.println("No se ha seleccionado ninguna lista de tareas. Use 'verListasTareas' para elegir una lista de tareas.");
         }
     }
 
     public void eliminarTarea(int numeroTarea) {
-        if (listaSeleccionada != null) {
-            listaSeleccionada.eliminarTarea(numeroTarea); // Utilizamos el método de ListaTareas
+        // Restamos 1 porque los índices en Java comienzan en 0, pero para el usuario comienzan en 1
+        int indiceTarea = numeroTarea - 1;
+
+        if (listaSeleccionada != null && indiceTarea >= 0 && indiceTarea < listaSeleccionada.obtenerTareas().size()) {
+            listaSeleccionada.eliminarTarea(indiceTarea); // Utilizamos el método de ListaTareas
+            System.out.println("Tarea eliminada: " + numeroTarea);
             listarTareas();
         } else {
-            System.out.println("No se ha seleccionado ninguna lista de tareas. Use 'verListasTareas' para elegir una lista de tareas.");
+            System.out.println("Índice no válido. La tarea no se pudo eliminar.");
         }
     }
 
-    public void marcarTareaComoRealizada(int numeroTarea) {
-        if (listaSeleccionada != null) {
-            listaSeleccionada.marcarTareaComoRealizada(numeroTarea); // Utilizamos el método de ListaTareas
-            listarTareas();
+    public void marcarTareaComoRealizada(int indiceTarea) {
+        int numeroTarea = indiceTarea - 1;
+        if (listaSeleccionada != null && numeroTarea > 0 && numeroTarea <= listaSeleccionada.obtenerTareas().size()) {
+            Tarea tareaSeleccionada = listaSeleccionada.obtenerTareas().get(numeroTarea - 1);
+
+            if (tareaSeleccionada.isRealizada()) {
+                // La tarea ya está marcada como realizada
+                System.out.println("La tarea " + numeroTarea + " ya está marcada como realizada.");
+            } else {
+                // Marcar la tarea como realizada
+                tareaSeleccionada.marcarComoRealizada();
+                System.out.println("Tarea " + numeroTarea + " marcada como realizada.");
+            }
         } else {
-            System.out.println("No se ha seleccionado ninguna lista de tareas. Use 'verListasTareas' para elegir una lista de tareas.");
+            System.out.println("Número de tarea inválido o no se ha seleccionado ninguna lista de tareas.");
         }
+        listarTareas();
     }
 
     public void setListaSeleccionada(ListaTareas listaSeleccionada) {
@@ -66,5 +86,47 @@ public class ManejadorTareas {
         } else {
             System.out.println("No se ha seleccionado ninguna lista de tareas. Use 'verListasTareas' para elegir una lista de tareas.");
         }
+    }
+
+    public void gestionarTareas() {
+        if (listaSeleccionada == null) {
+            System.out.println("No se ha seleccionado ninguna lista de tareas. Use 'verListasTareas' para elegir una lista de tareas.");
+            return; // Regresar al menú principal
+        }
+
+        Scanner scanner = new Scanner(System.in);
+        int opcion;
+        do {
+            opcion = menu.mostrarMenuTareas(); // Usamos la instancia de menu
+            switch (opcion) {
+                case 1:
+                    System.out.print("Ingrese el nombre de la nueva tarea: ");
+                    String nombreTarea = scanner.nextLine();
+                    if (!nombreTarea.trim().isEmpty()) {
+                        agregarNuevaTarea(nombreTarea);
+                    } else {
+                        System.out.println("El nombre de la tarea no puede estar vacío.");
+                    }
+                    break;
+                case 2:
+                    System.out.print("Ingrese el índice de la tarea que desea eliminar: ");
+                    int indiceEliminar = scanner.nextInt();
+                    scanner.nextLine(); // Consumir el salto de línea restante
+                    eliminarTarea(indiceEliminar);
+                    break;
+                case 3:
+                    System.out.print("Ingrese el índice de la tarea que desea marcar como realizada: ");
+                    int indiceMarcar = scanner.nextInt();
+                    scanner.nextLine(); // Consumir el salto de línea restante
+                    marcarTareaComoRealizada(indiceMarcar);
+                    break;
+                case 4:
+                    System.out.println("Regresando al menú anterior...");
+                    break;
+                default:
+                    System.out.println("Opción no válida. Intente de nuevo.");
+                    scanner.nextLine(); // Consumir entrada no válida
+            }
+        } while (opcion != 4);
     }
 }
