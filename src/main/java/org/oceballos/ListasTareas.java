@@ -3,8 +3,10 @@ package org.oceballos;
 import org.oceballos.model.ListaTareas;
 import org.oceballos.model.Tarea;
 
+import java.io.*;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Scanner;
 
 public class ListasTareas {
     private List<ListaTareas> listasTareas;
@@ -118,5 +120,65 @@ public class ListasTareas {
         } else {
             System.out.println("No se ha seleccionado ninguna lista de tareas. Use 'verListasTareas' para elegir una lista de tareas.");
         }
+    }
+
+    public void guardarListasTareas() {
+        Scanner scanner = new Scanner(System.in);
+        System.out.print("Ingrese el nombre del archivo para guardar las tareas: ");
+        String nombreArchivo = scanner.nextLine() + ".txt";
+
+        try (PrintWriter out = new PrintWriter(new FileWriter(nombreArchivo))) {
+            for (ListaTareas lista : this.listasTareas) {
+                out.println(lista.getNombre());
+                for (Tarea tarea : lista.obtenerTareas()) {
+                    out.printf("%s, %s, %s, %s%n",
+                            tarea.getNombre(),
+                            tarea.getFechaCreacion(),
+                            tarea.isRealizada() ? "Realizada" : "Pendiente",
+                            tarea.getFechaRealizacion() != null ? tarea.getFechaRealizacion() : "N/A");
+                }
+            }
+            System.out.println("Listas de tareas guardadas correctamente en " + nombreArchivo);
+        } catch (IOException e) {
+            System.err.println("Error al guardar las listas de tareas: " + e.getMessage());
+        }
+    }
+
+    public static ListasTareas cargarListasTareas() {
+        Scanner scanner = new Scanner(System.in);
+        System.out.print("Ingrese el nombre del archivo para cargar las tareas: ");
+        String nombreArchivo = scanner.nextLine() + ".txt";
+
+        ListasTareas listasTareas = new ListasTareas();
+        ListaTareas listaActual = null;
+
+        try (BufferedReader in = new BufferedReader(new FileReader(nombreArchivo))) {
+            String linea;
+            while ((linea = in.readLine()) != null) {
+                if (linea.trim().isEmpty()) {
+                    listaActual = null; // Nueva lista de tareas
+                } else {
+                    if (listaActual == null) {
+                        listaActual = new ListaTareas(linea);
+                        listasTareas.agregarLista(listaActual);
+                    } else {
+                        // Aquí asumimos que cada línea tiene el formato: nombre, fechaCreacion, estado, fechaRealizacion
+                        String[] partes = linea.split(", ");
+                        Tarea tarea = new Tarea(partes[0]);
+                        // Configurar las propiedades de la tarea basadas en las partes
+                        listaActual.agregarTarea(tarea);
+                    }
+                }
+            }
+            System.out.println("Listas de tareas cargadas correctamente desde " + nombreArchivo);
+        } catch (IOException e) {
+            System.err.println("Error al cargar las listas de tareas: " + e.getMessage());
+        }
+
+        return listasTareas;
+    }
+
+    public void agregarLista(ListaTareas lista) {
+        this.listasTareas.add(lista);
     }
 }

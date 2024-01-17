@@ -27,11 +27,19 @@ public class Main {
                     listasTareas.eliminarListaTareas();
                     break;
                 case 6:
+                    listasTareas = ListasTareas.cargarListasTareas(); // Carga las listas de tareas desde un archivo
+                    System.out.println("Listas de tareas cargadas.");
+                    break;
+                case 7:
+                    listasTareas.guardarListasTareas(); // Guarda las listas de tareas
+                    System.out.println("Listas de tareas guardadas.");
+                    break;
+                case 8:
                     System.out.println("Saliendo de la aplicación. ¡Hasta luego!");
                     break;
                 default:
                     System.out.println("Opción no válida. Intente de nuevo.");
             }
-        } while (opcion != 6);
+        } while (opcion != 8);
     }
 }
