@@ -4,6 +4,7 @@ public class Main {
     public static void main(String[] args) {
         ListasTareas listasTareas = new ListasTareas();
         Menu menu = new Menu();
+        ManejadorTareas manejadorTareas = new ManejadorTareas(menu, listasTareas); // Crea ManejadorTareas con ListasTareas y Menu
         int opcion;
 
         do {
@@ -17,7 +18,7 @@ public class Main {
                     listasTareas.verListasTareas();
                     break;
                 case 3:
-                    listasTareas.verTareasDeLista(); // Asegúrate de que la lista seleccionada se configure en este método
+                    listasTareas.verTareasDeLista(); // Ahora esto llama a gestionarTareas dentro de ListasTareas
                     break;
                 case 4:
                     listasTareas.actualizarListaTareas();
@@ -34,4 +35,3 @@ public class Main {
         } while (opcion != 6);
     }
 }
-

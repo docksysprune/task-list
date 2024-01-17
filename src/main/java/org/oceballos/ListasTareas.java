@@ -17,16 +17,14 @@ public class ListasTareas {
         this.listasTareas = new ArrayList<>();
         this.lector = new Lector();
         this.menu = new Menu();
-        this.manejadorTareas = new ManejadorTareas(menu); // Pasa la instancia del menú
+        this.manejadorTareas = new ManejadorTareas(menu, this);
     }
 
     public void crearListaTareas() {
         String nombreLista;
-
         do {
             System.out.print("Ingrese el nombre de la nueva lista de tareas: ");
             nombreLista = lector.leerString();
-
             if (nombreLista.trim().isEmpty()) {
                 System.out.println("\nEl nombre de la lista de tareas no puede estar vacío. Intente nuevamente.");
             }
@@ -46,7 +44,6 @@ public class ListasTareas {
         if (!listasTareas.isEmpty()) {
             System.out.print("Ingrese el número de la lista de tareas que desea seleccionar: ");
             int numeroSeleccionado = lector.leerEntero();
-
             if (numeroSeleccionado >= 1 && numeroSeleccionado <= listasTareas.size()) {
                 listaSeleccionada = listasTareas.get(numeroSeleccionado - 1);
                 System.out.println("Lista de tareas seleccionada: " + listaSeleccionada.getNombre());
@@ -66,11 +63,6 @@ public class ListasTareas {
             for (int i = 0; i < tareas.size(); i++) {
                 System.out.println((i + 1) + ". " + tareas.get(i).getNombre());
             }
-
-            // Actualizar la lista seleccionada en ManejadorTareas antes de llamar a gestionarTareas
-            manejadorTareas.setListaSeleccionada(this.listaSeleccionada);
-
-            // Llamar al método gestionarTareas de ManejadorTareas
             manejadorTareas.gestionarTareas();
         } else {
             System.out.println("No se ha seleccionado ninguna lista de tareas. Use 'verListasTareas' para elegir una lista de tareas.");
@@ -111,6 +103,10 @@ public class ListasTareas {
         } else {
             System.out.println("Número de lista inválido. La lista de tareas no se pudo actualizar.");
         }
+    }
+
+    public ListaTareas getListaSeleccionada() {
+        return this.listaSeleccionada;
     }
 
     public void eliminarListaTareas() {

@@ -4,25 +4,23 @@ import org.oceballos.model.ListaTareas;
 import org.oceballos.model.Tarea;
 
 import java.text.SimpleDateFormat;
-import java.util.ArrayList;
-import java.util.List;
 import java.util.Scanner;
 
 public class ManejadorTareas {
-    private ListaTareas listaSeleccionada;
-    private List<Tarea> tareas;
+    private ListasTareas listasTareas; // Referencia a ListasTareas
     private Menu menu;
 
-    public ManejadorTareas(Menu menu) { // Constructor que recibe una instancia de Menu
-        this.tareas = new ArrayList<>();
-        this.menu = menu; // Usamos la instancia pasada
+    public ManejadorTareas(Menu menu, ListasTareas listasTareas) { // Aceptar ListasTareas en el constructor
+        this.menu = menu;
+        this.listasTareas = listasTareas;
     }
 
     public void agregarNuevaTarea(String nombre) {
+        ListaTareas listaSeleccionada = listasTareas.getListaSeleccionada();
         if (listaSeleccionada != null) {
-            if (nombre != null && !nombre.trim().isEmpty()) { // Validación para el nombre no vacío
+            if (nombre != null && !nombre.trim().isEmpty()) {
                 Tarea nuevaTarea = new Tarea(nombre);
-                listaSeleccionada.agregarTarea(nuevaTarea); // Utilizamos el método de ListaTareas
+                listaSeleccionada.agregarTarea(nuevaTarea);
                 System.out.println("Nueva tarea agregada: " + nombre);
                 listarTareas();
             } else {
@@ -34,7 +32,7 @@ public class ManejadorTareas {
     }
 
     public void eliminarTarea(int numeroTarea) {
-        // Validación del índice
+        ListaTareas listaSeleccionada = listasTareas.getListaSeleccionada();
         int indiceTarea = numeroTarea - 1;
         if (listaSeleccionada != null && indiceTarea >= 0 && indiceTarea < listaSeleccionada.obtenerTareas().size()) {
             listaSeleccionada.eliminarTarea(indiceTarea);
@@ -46,7 +44,7 @@ public class ManejadorTareas {
     }
 
     public void marcarTareaComoRealizada(int numeroTarea) {
-        // Validación del índice
+        ListaTareas listaSeleccionada = listasTareas.getListaSeleccionada();
         int indiceTarea = numeroTarea - 1;
         if (listaSeleccionada != null && indiceTarea >= 0 && indiceTarea < listaSeleccionada.obtenerTareas().size()) {
             Tarea tareaSeleccionada = listaSeleccionada.obtenerTareas().get(indiceTarea);
@@ -62,19 +60,12 @@ public class ManejadorTareas {
         }
     }
 
-
-    public void setListaSeleccionada(ListaTareas listaSeleccionada) {
-        this.listaSeleccionada = listaSeleccionada;
-    }
-
     private void listarTareas() {
+        ListaTareas listaSeleccionada = listasTareas.getListaSeleccionada();
         if (listaSeleccionada != null) {
             SimpleDateFormat dateFormat = new SimpleDateFormat("dd/MM/yyyy HH:mm:ss");
-            List<Tarea> tareas = listaSeleccionada.obtenerTareas();
-
-            System.out.println("Tareas en la lista seleccionada (" + listaSeleccionada.getNombre() + "):");
-            for (int i = 0; i < tareas.size(); i++) {
-                Tarea tarea = tareas.get(i);
+            for (int i = 0; i < listaSeleccionada.obtenerTareas().size(); i++) {
+                Tarea tarea = listaSeleccionada.obtenerTareas().get(i);
                 String estado = tarea.isRealizada() ? "Completada" : "Pendiente";
                 String fechaRealizacion = tarea.getFechaRealizacion() != null
                         ? dateFormat.format(tarea.getFechaRealizacion())
@@ -87,7 +78,7 @@ public class ManejadorTareas {
     }
 
     public void gestionarTareas() {
-        if (listaSeleccionada == null) {
+        if (listasTareas.getListaSeleccionada() == null) {
             System.out.println("No se ha seleccionado ninguna lista de tareas. Use 'verListasTareas' para elegir una lista de tareas.");
             return; // Regresar al menú principal
         }
@@ -95,7 +86,7 @@ public class ManejadorTareas {
         Scanner scanner = new Scanner(System.in);
         int opcion;
         do {
-            opcion = menu.mostrarMenuTareas(); // Usamos la instancia de menu
+            opcion = menu.mostrarMenuTareas();
             switch (opcion) {
                 case 1:
                     System.out.print("Ingrese el nombre de la nueva tarea: ");
@@ -109,13 +100,13 @@ public class ManejadorTareas {
                 case 2:
                     System.out.print("Ingrese el índice de la tarea que desea eliminar: ");
                     int indiceEliminar = scanner.nextInt();
-                    scanner.nextLine(); // Consumir el salto de línea restante
+                    scanner.nextLine();
                     eliminarTarea(indiceEliminar);
                     break;
                 case 3:
                     System.out.print("Ingrese el índice de la tarea que desea marcar como realizada: ");
                     int indiceMarcar = scanner.nextInt();
-                    scanner.nextLine(); // Consumir el salto de línea restante
+                    scanner.nextLine();
                     marcarTareaComoRealizada(indiceMarcar);
                     break;
                 case 4:
@@ -123,7 +114,7 @@ public class ManejadorTareas {
                     break;
                 default:
                     System.out.println("Opción no válida. Intente de nuevo.");
-                    scanner.nextLine(); // Consumir entrada no válida
+                    scanner.nextLine();
             }
         } while (opcion != 4);
     }

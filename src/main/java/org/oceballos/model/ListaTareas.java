@@ -57,7 +57,6 @@ public class ListaTareas implements Serializable {
         }
     }
 
-
     public int obtenerNumeroTareas() {
         return tareas.size();
     }
