@@ -7,7 +7,7 @@ import java.util.Date;
 import java.util.List;
 
 public class ListaTareas implements Serializable {
-    private static final long serialVersionUID = 1L; // Agregado para la serialización
+    private static final long serialVersionUID = 1L;
 
     private String nombre;
     private final Date fechaCreacion;
