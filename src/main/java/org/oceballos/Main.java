@@ -2,38 +2,44 @@ package org.oceballos;
 
 public class Main {
     public static void main(String[] args) {
+        ListasTareas listasTareas = new ListasTareas();
         Menu menu = new Menu();
-        Reader reader = new Reader();
-        TaskLists tasks = new TaskLists();
-        int option;
+        //ManejadorTareas manejadorTareas = new ManejadorTareas(menu, listasTareas); // Crea ManejadorTareas con ListasTareas y Menu
+        int opcion;
 
-        while (true) {
-            menu.displayMenu();
-            System.out.print("Select an option: ");
-            option = reader.readOption();
+        do {
+            opcion = menu.mostrarMenuPrincipal();
 
-            switch (option) {
+            switch (opcion) {
                 case 1:
-                    tasks.createTaskList();
+                    listasTareas.crearListaTareas();
                     break;
                 case 2:
-                    tasks.viewTaskLists();
+                    listasTareas.verListasTareas();
                     break;
                 case 3:
-                    tasks.viewTasksInList();
+                    listasTareas.verTareasDeLista();
                     break;
                 case 4:
-                    tasks.updateTaskList();
+                    listasTareas.actualizarListaTareas();
                     break;
                 case 5:
-                    tasks.deleteTaskList();
+                    listasTareas.eliminarListaTareas();
                     break;
                 case 6:
-                    System.out.println("Exiting the program...");
-                    return;
+                    listasTareas = ListasTareas.cargarListasTareas();
+                    System.out.println("Listas de tareas cargadas.");
+                    break;
+                case 7:
+                    listasTareas.guardarListasTareas();
+                    System.out.println("Listas de tareas guardadas.");
+                    break;
+                case 8:
+                    System.out.println("Saliendo de la aplicación. ¡Hasta luego!");
+                    break;
                 default:
-                    System.out.println("Invalid option. Please try again.");
+                    System.out.println("Opción no válida. Intente de nuevo.");
             }
-        }
+        } while (opcion != 8);
     }
 }

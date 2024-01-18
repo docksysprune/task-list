@@ -1,13 +1,33 @@
 package org.oceballos;
 
 public class Menu {
-    public void displayMenu() {
-        System.out.println("Task Management Menu");
-        System.out.println("1. Create new task list");
-        System.out.println("2. View task lists");
-        System.out.println("3. View tasks in a list");
-        System.out.println("4. Update task list");
-        System.out.println("5. Delete task list");
-        System.out.println("6. Exit");
+    private Lector lector;
+
+    public Menu() {
+        this.lector = new Lector();
+    }
+
+    public int mostrarMenuPrincipal() {
+        System.out.println("Menu principal:");
+        System.out.println("1. Crear nueva lista de tareas");
+        System.out.println("2. Ver listas de tareas");
+        System.out.println("3. Ver las tareas de una lista");
+        System.out.println("4. Actualizar lista de tareas");
+        System.out.println("5. Eliminar lista de tareas");
+        System.out.println("6. Cargar lista de tareas");
+        System.out.println("7. Salir y guardar");
+        System.out.println("8. Salir sin guardar");
+        System.out.print("Selecciona una opcion: ");
+        return lector.leerEntero();
+    }
+
+    public int mostrarMenuTareas() {
+        System.out.println("Menu tareas:");
+        System.out.println("1. Agregar nueva tarea");
+        System.out.println("2. Eliminar tarea");
+        System.out.println("3. Marcar tarea como completada");
+        System.out.println("4. Regresar al menu principal");
+        System.out.print("Selecciona una opcion: ");
+        return lector.leerEntero();
     }
 }
