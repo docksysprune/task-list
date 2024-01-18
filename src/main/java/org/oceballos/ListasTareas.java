@@ -57,7 +57,6 @@ public class ListasTareas {
         }
     }
 
-    // En el método verTareasDeLista de la clase ListasTareas
     public void verTareasDeLista() {
         if (listaSeleccionada != null) {
             List<Tarea> tareas = listaSeleccionada.obtenerTareas();
@@ -156,16 +155,14 @@ public class ListasTareas {
             String linea;
             while ((linea = in.readLine()) != null) {
                 if (linea.trim().isEmpty()) {
-                    listaActual = null; // Nueva lista de tareas
+                    listaActual = null;
                 } else {
                     if (listaActual == null) {
                         listaActual = new ListaTareas(linea);
                         listasTareas.agregarLista(listaActual);
                     } else {
-                        // Aquí asumimos que cada línea tiene el formato: nombre, fechaCreacion, estado, fechaRealizacion
                         String[] partes = linea.split(", ");
                         Tarea tarea = new Tarea(partes[0]);
-                        // Configurar las propiedades de la tarea basadas en las partes
                         listaActual.agregarTarea(tarea);
                     }
                 }

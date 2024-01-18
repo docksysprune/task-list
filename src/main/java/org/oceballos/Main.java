@@ -4,7 +4,7 @@ public class Main {
     public static void main(String[] args) {
         ListasTareas listasTareas = new ListasTareas();
         Menu menu = new Menu();
-        ManejadorTareas manejadorTareas = new ManejadorTareas(menu, listasTareas); // Crea ManejadorTareas con ListasTareas y Menu
+        //ManejadorTareas manejadorTareas = new ManejadorTareas(menu, listasTareas); // Crea ManejadorTareas con ListasTareas y Menu
         int opcion;
 
         do {
@@ -18,7 +18,7 @@ public class Main {
                     listasTareas.verListasTareas();
                     break;
                 case 3:
-                    listasTareas.verTareasDeLista(); // Ahora esto llama a gestionarTareas dentro de ListasTareas
+                    listasTareas.verTareasDeLista();
                     break;
                 case 4:
                     listasTareas.actualizarListaTareas();
@@ -27,11 +27,11 @@ public class Main {
                     listasTareas.eliminarListaTareas();
                     break;
                 case 6:
-                    listasTareas = ListasTareas.cargarListasTareas(); // Carga las listas de tareas desde un archivo
+                    listasTareas = ListasTareas.cargarListasTareas();
                     System.out.println("Listas de tareas cargadas.");
                     break;
                 case 7:
-                    listasTareas.guardarListasTareas(); // Guarda las listas de tareas
+                    listasTareas.guardarListasTareas();
                     System.out.println("Listas de tareas guardadas.");
                     break;
                 case 8:

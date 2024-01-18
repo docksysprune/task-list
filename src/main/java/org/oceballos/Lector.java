@@ -13,7 +13,7 @@ public class Lector {
             try {
                 return scanner.nextInt();
             } catch (InputMismatchException e) {
-                scanner.next(); // Descarta la entrada incorrecta
+                scanner.next();
                 System.out.print("Entrada inválida. Por favor, ingrese un número: ");
             }
         }

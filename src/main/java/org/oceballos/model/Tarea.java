@@ -4,7 +4,7 @@ import java.io.Serializable;
 import java.util.Date;
 
 public class Tarea implements Serializable {
-    private static final long serialVersionUID = 1L; // Recomendado para la serialización
+    private static final long serialVersionUID = 1L;
     private String nombre;
     private final Date fechaCreacion;
     private Date fechaExpiracion;

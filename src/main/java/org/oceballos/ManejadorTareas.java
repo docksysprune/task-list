@@ -7,10 +7,10 @@ import java.text.SimpleDateFormat;
 import java.util.Scanner;
 
 public class ManejadorTareas {
-    private ListasTareas listasTareas; // Referencia a ListasTareas
+    private ListasTareas listasTareas;
     private Menu menu;
 
-    public ManejadorTareas(Menu menu, ListasTareas listasTareas) { // Aceptar ListasTareas en el constructor
+    public ManejadorTareas(Menu menu, ListasTareas listasTareas) {
         this.menu = menu;
         this.listasTareas = listasTareas;
     }
